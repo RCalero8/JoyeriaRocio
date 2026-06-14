@@ -8,8 +8,7 @@ const Contacto: React.FC = () => {
       { value: "pedido", label: "Pedido" },
       { value: "reparacion", label: "Reparación" },
       { value: "diseño", label: "Diseño personalizado" },
-      { value: "revision", label: "Revisión" },
-      { value: "reclamo", label: "Reclamo" },
+      { value: "presupuesto", label: "Presupuesto" },
       { value: "otros", label: "Otro" },
     ];
     for (let i = allCategories.length - 1; i > 0; i -= 1) {
