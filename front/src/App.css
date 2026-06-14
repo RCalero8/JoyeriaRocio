@@ -25,9 +25,11 @@
   padding: 0;
 }
 
-html { scroll-behavior: smooth; }
-
+html,
 body {
+  width: 100%;
+  min-height: 100vh;
+  scroll-behavior: smooth;
   background: var(--bg);
   color: var(--text-main);
   font-family: var(--sans);
@@ -36,6 +38,7 @@ body {
 
 /* ── Layout ── */
 .app {
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
