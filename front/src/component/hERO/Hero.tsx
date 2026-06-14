@@ -10,7 +10,7 @@ const Hero: React.FC<HeroProps> = ({ onNav }) => (
   <section className="hero">
     <div className="hero__overlay" />
     <div className="hero__content">
-      <p className="hero__eyebrow">Artesanía · Dos Hermanas, Sevilla</p>
+      <p className="hero__eyebrow">Taller · Joyeria Zulema Rocio</p>
       <h1 className="hero__title">
         Joyas hechas<br />a mano,<br />con alma.
       </h1>
