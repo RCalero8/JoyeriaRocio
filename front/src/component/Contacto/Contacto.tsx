@@ -14,7 +14,7 @@ const Contacto: React.FC = () => {
       <div className="contacto__layout">
         <div className="contacto__info">
           {[
-            { label: "Taller",    value: "Camas, Sevilla" },
+            { label: "Taller",    value: "Joyeria Zulema" },
             { label: "Teléfono", value: "+34 637 81 70 16" },
             { label: "Horario",  value: "Lun–Vie, 10:00–20:00" },
             { label: "Horario Fines de Semana",  value: "Sabado, 10:00–14:00" },
