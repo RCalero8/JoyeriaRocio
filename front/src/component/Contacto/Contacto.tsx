@@ -7,7 +7,6 @@ const Contacto: React.FC = () => {
       { value: "consulta", label: "Consulta general" },
       { value: "pedido", label: "Pedido" },
       { value: "reparacion", label: "Reparación" },
-      { value: "colaboracion", label: "Colaboración" },
       { value: "diseño", label: "Diseño personalizado" },
       { value: "revision", label: "Revisión" },
       { value: "reclamo", label: "Reclamo" },
