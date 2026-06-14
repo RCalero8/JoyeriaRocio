@@ -67,6 +67,18 @@
   pointer-events: none;
 }
 
+.hero__logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(80px, 18vw, 140px);
+  max-width: 140px;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  opacity: 0.95;
+  pointer-events: none;
+}
+
 @media (max-width: 768px) {
   .hero { padding: 60px 20px; min-height: calc(100svh - 60px); }
   .hero__content { margin-left: 0; }

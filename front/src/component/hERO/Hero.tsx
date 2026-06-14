@@ -39,6 +39,7 @@ const Hero: React.FC<HeroProps> = ({ onNav }) => (
           opacity="0.6"
         />
       </svg>
+      <img className="hero__logo" src="/logo.png" alt="Logo Joyería Zulema" />
     </div>
   </section>
 );
