@@ -14,10 +14,9 @@ const Contacto: React.FC = () => {
       <div className="contacto__layout">
         <div className="contacto__info">
           {[
-            { label: "Taller",    value: "Dos Hermanas, Sevilla" },
-            { label: "Teléfono", value: "+34 600 000 000" },
-            { label: "Email",    value: "hola@joyeriazulema.es" },
-            { label: "Horario",  value: "Lun–Vie, 10:00–19:00" },
+            { label: "Taller",    value: "Camas, Sevilla" },
+            { label: "Teléfono", value: "+34 637 81 70 16" },
+            { label: "Horario",  value: "Lun–Vie, 10:00–20:00" },
           ].map(({ label, value }) => (
             <div key={label} className="contacto__dato">
               <span className="contacto__label">{label}</span>
