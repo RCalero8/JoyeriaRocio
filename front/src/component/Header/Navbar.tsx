@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./header.css";
+import "./Navbar.css";
 import logo from "../../../public/logo.png";
 
 type NavLink = {
