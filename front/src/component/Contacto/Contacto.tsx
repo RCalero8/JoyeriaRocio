@@ -39,8 +39,8 @@ const Contacto: React.FC = () => {
                   <input className="form__input" type="text" placeholder="Tu nombre" />
                 </div>
                 <div className="form__field">
-                  <label className="form__label">Email</label>
-                  <input className="form__input" type="email" placeholder="tu@email.com" />
+                  <label className="form__label">Teléfono</label>
+                  <input className="form__input" type="tel" placeholder="+34 600 000 000" />
                 </div>
               </div>
               <div className="form__field">
