@@ -1,8 +1,27 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./Contacto.css";
 
 const Contacto: React.FC = () => {
+  const categories = useMemo(() => {
+    const allCategories = [
+      { value: "consulta", label: "Consulta general" },
+      { value: "pedido", label: "Pedido" },
+      { value: "reparacion", label: "Reparación" },
+      { value: "colaboracion", label: "Colaboración" },
+      { value: "diseño", label: "Diseño personalizado" },
+      { value: "revision", label: "Revisión" },
+      { value: "reclamo", label: "Reclamo" },
+      { value: "otros", label: "Otro" },
+    ];
+    for (let i = allCategories.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [allCategories[i], allCategories[j]] = [allCategories[j], allCategories[i]];
+    }
+    return allCategories.slice(0, 5);
+  }, []);
+
   const [sent, setSent] = useState(false);
+  const [category, setCategory] = useState(categories[0]?.value ?? "consulta");
 
   return (
     <section className="contacto">
@@ -42,6 +61,20 @@ const Contacto: React.FC = () => {
                   <label className="form__label">Teléfono</label>
                   <input className="form__input" type="tel" placeholder="+34 600 000 000" />
                 </div>
+              </div>
+              <div className="form__field">
+                <label className="form__label">Categoría</label>
+                <select
+                  className="form__input"
+                  value={category}
+                  onChange={(event) => setCategory(event.target.value)}
+                >
+                  {categories.map(({ value, label }) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="form__field">
                 <label className="form__label">Mensaje</label>
