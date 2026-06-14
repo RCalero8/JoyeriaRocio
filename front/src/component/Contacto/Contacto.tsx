@@ -17,6 +17,7 @@ const Contacto: React.FC = () => {
             { label: "Taller",    value: "Camas, Sevilla" },
             { label: "Teléfono", value: "+34 637 81 70 16" },
             { label: "Horario",  value: "Lun–Vie, 10:00–20:00" },
+            { label: "Horario Fines de Semana",  value: "Sabado, 10:00–14:00" },
           ].map(({ label, value }) => (
             <div key={label} className="contacto__dato">
               <span className="contacto__label">{label}</span>
