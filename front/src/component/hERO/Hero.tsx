@@ -28,17 +28,6 @@ const Hero: React.FC<HeroProps> = ({ onNav }) => (
       </div>
     </div>
     <div className="hero__ornament" aria-hidden="true">
-      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100" cy="100" r="90" stroke="#C9A84C" strokeWidth="0.5" strokeDasharray="4 6" />
-        <circle cx="100" cy="100" r="70" stroke="#C9A84C" strokeWidth="0.3" />
-        <path
-          d="M100 10 L110 90 L190 100 L110 110 L100 190 L90 110 L10 100 L90 90 Z"
-          fill="none"
-          stroke="#C9A84C"
-          strokeWidth="0.5"
-          opacity="0.6"
-        />
-      </svg>
       <img className="hero__logo" src="/logo.png" alt="Logo Joyería Zulema" />
     </div>
   </section>

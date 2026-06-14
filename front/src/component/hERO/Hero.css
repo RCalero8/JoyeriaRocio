@@ -59,23 +59,20 @@
 
 .hero__ornament {
   position: absolute;
-  right: clamp(40px, 10vw, 160px);
+  right: clamp(20px, 8vw, 120px);
   top: 50%;
   transform: translateY(-50%);
-  width: clamp(240px, 30vw, 420px);
-  opacity: 0.35;
+  width: clamp(320px, 44vw, 520px);
   pointer-events: none;
 }
 
 .hero__logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: clamp(80px, 18vw, 140px);
-  max-width: 140px;
-  transform: translate(-50%, -50%);
+  width: clamp(180px, 30vw, 320px);
+  max-width: 320px;
+  display: block;
+  margin: 0 auto;
   object-fit: contain;
-  opacity: 0.95;
+  opacity: 1;
   pointer-events: none;
 }
 
