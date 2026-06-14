@@ -1,5 +1,4 @@
 import Navbar from './component/Header/Navbar';
-import './App.css'
 
 function App() {
 
