@@ -1,0 +1,105 @@
+/* ═══════════════════════════════════════════
+   Taller Joyería Zulema — Variables globales
+   ═══════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+:root {
+  --bg:          #0e0d0b;
+  --bg-section:  #121110;
+  --bg-card:     #181612;
+  --gold:        #c9a84c;
+  --gold-light:  #e8c96a;
+  --gold-dim:    #9a7a34;
+  --gold-line:   rgba(201, 168, 76, 0.18);
+  --text-main:   #e8e0d0;
+  --text-muted:  #7a7060;
+  --text-admin:  #5a5548;
+  --serif:       'Cormorant Garamond', Georgia, serif;
+  --sans:        'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ── */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main { flex: 1; }
+
+/* ── Botones globales ── */
+.btn {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  border: none;
+  padding: 14px 32px;
+  transition: all 0.2s ease;
+}
+
+.btn--primary {
+  background: var(--gold);
+  color: #0e0d0b;
+}
+.btn--primary:hover { background: var(--gold-light); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold-line);
+}
+.btn--ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+/* ── Cabeceras de sección compartidas ── */
+.section__header {
+  text-align: center;
+  padding: 80px 32px 60px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.section__eyebrow {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.section__title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 400;
+  color: var(--text-main);
+  margin-bottom: 18px;
+  letter-spacing: -0.01em;
+}
+
+.section__sub {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
