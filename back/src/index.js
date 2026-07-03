@@ -3,8 +3,8 @@ import cors from 'cors';
 import {createClient} from '@supabase/supabase-js';
 import 'dotenv/config';
 //Importacion de las rutas
-import productosRouter from "./routes/productos";
-import contactoRouter from "./routes/contacto";
+import productosRouter from "./routes/productos.js";
+import contactoRouter from "./routes/contacto.js";
 
 const app = express();
 app.use(cors());
