@@ -1,49 +1,50 @@
-const express = require('express');
-const router = express.Router();
-const supabase = require('../config/db');
+import { Router } from 'express';
+import { supabase } from '../config/supabase.js';
 
-// GET /api/productos?categoria=Sortija&limit=100&offset=0
-router.get('/', async (req, res, next) => {
+const router = Router();
+
+// Obtener todos los productos activos con sus imágenes y categorías
+router.get('/', async (req, res) => {
   try {
-    const { categoria, limit = 100, offset = 0 } = req.query;
+    const { data, error } = await supabase
+      .from('productos')
+      .select(`
+        id, nombre, slug, descripcion, precio, material, peso_gramos, stock,
+        categorias!productos_categoria_id_fkey (id, nombre, slug),
+        imagenes_productos (id, url_imagen, posicion)
+      `)
+      .eq('activo', true)
+      .order('id', { ascending: true });
 
-    let query = supabase
-      .from('catalogo_publico')
-      .select('id, nombre, categoria, url_imagen, posicion')
-      .order('posicion', { ascending: true, nullsFirst: false })
-      .range(Number(offset), Number(offset) + Number(limit) - 1);
-
-    if (categoria) query = query.eq('categoria', categoria);
-
-    const { data, error } = await query;
     if (error) throw error;
+
     res.json(data);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
-// GET /api/productos/:id
-router.get('/:id', async (req, res, next) => {
+// Obtener un solo producto por su slug (para la página de detalle)
+router.get('/:slug', async (req, res) => {
   try {
-    const { id } = req.params;
-
-    if (isNaN(Number(id))) {
-      return res.status(400).json({ error: 'El id debe ser un número' });
-    }
-
+    const { slug } = req.params;
     const { data, error } = await supabase
-      .from('catalogo_publico')
-      .select('id, nombre, categoria, url_imagen, posicion')
-      .eq('id', id)
+      .from('productos')
+      .select(`
+        *,
+        categorias!productos_categoria_id_fkey (id, nombre, slug),
+        imagenes_productos (id, url_imagen, posicion)
+      `)
+      .eq('slug', slug)
       .single();
 
     if (error) throw error;
-    if (!data) return res.status(404).json({ error: 'Producto no encontrado' });
+    if (!data) return res.status(404).json({ mensaje: 'Producto no encontrado' });
+
     res.json(data);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
-module.exports = router;
+export default router;
