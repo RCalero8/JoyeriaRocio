@@ -7,14 +7,14 @@ const router = Router();
 router.get('/', async (req, res) => {
   try {
     const { data, error } = await supabase
-      .from('productos')
-      .select(`
-        id, nombre, slug, descripcion, precio, material, peso_gramos, stock,
-        categorias!productos_categoria_id_fkey (id, nombre, slug),
-        imagenes_productos (id, url_imagen, posicion)
-      `)
-      .eq('activo', true)
-      .order('id', { ascending: true });
+  .from('productos') 
+  .select(`
+    id, nombre, slug, descripcion, precio, material, peso_gramos, stock,
+    categorias!productos_categoria_id_fkey (id, nombre, slug),
+    imagenes_productos (id, url_imagen, posicion)
+  `)
+  .eq('activo', true)
+  .order('id', { ascending: true });
 
     if (error) throw error;
 
