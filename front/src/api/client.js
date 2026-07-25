@@ -30,8 +30,13 @@ async function request(path, { method = 'GET', body, auth = false } = {}) {
 
 export const api = {
   getCategories: () => request('/categories'),
-  getProducts: (categoryId) =>
-    request(`/products${categoryId ? `?category=${categoryId}` : ''}`),
+  getProducts: ({ category, search } = {}) => {
+    const params = new URLSearchParams();
+    if (category) params.set('category', category);
+    if (search) params.set('search', search);
+    const qs = params.toString();
+    return request(`/products${qs ? `?${qs}` : ''}`);
+  },
   sendMessage: (payload) => request('/messages', { method: 'POST', body: payload }),
 
   login: (email, password) =>

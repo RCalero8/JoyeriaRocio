@@ -1,64 +1,71 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { api } from '../api/client';
+import ProductCard from '../components/ProductCard';
 
 export default function Home() {
+  const [recent, setRecent] = useState([]);
+
+  useEffect(() => {
+    api
+      .getProducts({})
+      .then((products) => setRecent(products.slice(0, 4)))
+      .catch(() => {});
+  }, []);
+
   return (
     <>
-      <section className="hero">
-        <div className="hero__text">
-          <span className="eyebrow">Joyería fina · Hecha a mano</span>
-          <h1>
-            Piezas que se <em>heredan</em>,
-            <br /> no que se descartan.
-          </h1>
-          <p className="hero__lede">
-            Cada anillo, collar y pulsera nace de metales nobles y piedras
-            elegidas una por una. Nada sale del taller hasta que merece
-            quedarse para siempre.
-          </p>
-          <div className="hero__actions">
-            <Link to="/productos" className="btn btn--primary">
-              Ver colección
-            </Link>
-            <Link to="/contacto" className="btn btn--ghost">
-              Hablar con nosotros
-            </Link>
+      <section className="hero-shop">
+        <div className="hero-shop__main">
+          <img
+            src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=900&q=80"
+            alt="Joyería Orfeva"
+          />
+          <div className="hero-shop__caption">
+            <span className="eyebrow">Joyería fina · Hecha a mano</span>
+            <h1>Deja que tus joyas hablen por ti</h1>
+            <Link to="/productos" className="btn btn--primary">Ver colección</Link>
           </div>
         </div>
-        <div className="hero__visual">
-          <div className="hero__frame">
-            <span className="corner corner--tl" />
-            <span className="corner corner--tr" />
-            <span className="corner corner--bl" />
-            <span className="corner corner--br" />
-            <div className="hero__glow" />
+
+        <div className="hero-shop__side">
+          <div className="promo-box">
+            <strong>Materiales nobles</strong>
+            <span>Oro 18k, plata de ley y piedras naturales certificadas.</span>
+          </div>
+          <div className="promo-box promo-box--gold">
+            <strong>Hecho a mano</strong>
+            <span>Diseño y engaste artesanal, pieza por pieza.</span>
+          </div>
+          <div className="promo-box">
+            <strong>Garantía incluida</strong>
+            <span>Certificado de autenticidad y ajuste gratuito.</span>
           </div>
         </div>
       </section>
 
-      <section className="section section--divider">
-        <div className="section__inner three-cols">
-          <div>
-            <span className="eyebrow">Materiales</span>
-            <p>Oro de 18k, plata de ley y piedras naturales certificadas.</p>
+      {recent.length > 0 && (
+        <section className="section">
+          <div className="section__inner">
+            <span className="eyebrow">Novedades</span>
+            <h2 className="section__title">Recién llegados</h2>
+            <div className="product-grid">
+              {recent.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+            <div className="section__cta-link">
+              <Link to="/productos" className="btn btn--ghost">Ver todo el catálogo</Link>
+            </div>
           </div>
-          <div>
-            <span className="eyebrow">Proceso</span>
-            <p>Diseño y engaste artesanal, pieza por pieza, en taller propio.</p>
-          </div>
-          <div>
-            <span className="eyebrow">Garantía</span>
-            <p>Cada joya incluye certificado de autenticidad y ajuste gratuito.</p>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="section section--cta">
         <div className="section__inner">
           <h2>¿Buscas una pieza en particular?</h2>
           <p>Cuéntanos qué imaginas y te ayudamos a encontrarla o crearla.</p>
-          <Link to="/contacto" className="btn btn--primary">
-            Escríbenos
-          </Link>
+          <Link to="/contacto" className="btn btn--primary">Escríbenos</Link>
         </div>
       </section>
     </>
