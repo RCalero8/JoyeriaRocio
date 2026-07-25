@@ -48,17 +48,15 @@ router.get('/:id', async (req, res) => {
 });
 
 // Crear producto
-router.post('/', async (req, res) => {
+router.post('/', requireAdmin, async (req, res) => {
   const {
     name, sku, description, image_url, category_id,
-    price, stock, material, weight, dimensions, featured, active,
+    price, stock, material, weight, dimensions, featured,active,
   } = req.body;
-
-  if (!name || !category_id) {
+  if (!name || !category_id){
     return res.status(400).json({ error: 'name y category_id son requeridos' });
   }
-
-  const { data, error } = await supabase
+   const { data, error } = await supabase
     .from('products')
     .insert([{
       name, sku: sku || null, description, image_url, category_id,
@@ -70,10 +68,10 @@ router.post('/', async (req, res) => {
 
   if (error) return res.status(500).json({ error: error.message });
   res.status(201).json(data);
-});
+})
 
 // Actualizar producto
-router.put('/:id', async (req, res) => {
+router.put('/:id', requireAdmin, async (req, res) => {
   const {
     name, sku, description, image_url, category_id,
     price, stock, material, weight, dimensions, featured, active,
@@ -92,7 +90,6 @@ router.put('/:id', async (req, res) => {
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
 });
-
 // Eliminar producto
 router.delete('/:id', async (req, res) => {
   const { error } = await supabase.from('products').delete().eq('id', req.params.id);
