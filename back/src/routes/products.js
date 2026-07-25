@@ -3,7 +3,7 @@
  */
 const express = require('express');
 const supabase = require('../config/supabase');
-
+   const { requireAdmin } = require('../middleware/auth');
 const router = express.Router();
 
 // Publico: listar productos activos, con filtro opcional por categoria
