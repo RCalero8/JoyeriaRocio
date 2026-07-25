@@ -28,6 +28,17 @@ router.get('/', async (req, res) => {
   res.json(data);
 });
 
+// Admin: listar todos los productos (incluidos ocultos)
+router.get('/admin/all', requireAdmin, async (req, res) => {
+  const { data, error } = await supabase
+    .from('products')
+    .select('*, category:categories(id, name)')
+    .order('created_at', { ascending: false });
+
+  if (error) return res.status(500).json({ error: error.message });
+  res.json(data || []);
+});
+
 // Un solo producto
 router.get('/:id', async (req, res) => {
   const { data, error } = await supabase
@@ -84,7 +95,7 @@ router.put('/:id', requireAdmin, async (req, res) => {
   res.json(data);
 });
 // Eliminar producto
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAdmin, async (req, res) => {
   const { error } = await supabase.from('products').delete().eq('id', req.params.id);
   if (error) return res.status(500).json({ error: error.message });
   res.status(204).send();
