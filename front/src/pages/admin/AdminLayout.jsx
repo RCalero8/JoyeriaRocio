@@ -14,7 +14,7 @@ export default function AdminLayout() {
     <div className="admin-layout">
       <aside className="admin-sidebar">
         <div className="brand brand--admin">
-          <span className="brand__mark">✦</span>
+          <span className="brand__mark"><img src="/logo.png" alt="logo" /></span>
           <span className="brand__name">Taller Joyeria Zulema</span>
         </div>
         <nav className="admin-nav">

@@ -30,7 +30,7 @@ export default function Navbar() {
 
       <div className="site-header__inner">
         <NavLink to="/" className="brand">
-          <span className="brand__mark">✦</span>
+          <span className="brand__mark"><img src="/logo.png" alt="logo" /></span>
           <span className="brand__name">Taller Joyeria Zulema</span>
         </NavLink>
 
