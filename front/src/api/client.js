@@ -37,33 +37,33 @@ export const api = {
     const qs = params.toString();
     return request(`/products${qs ? `?${qs}` : ''}`);
   },
-  sendMessage: (payload) => request('/messages', { method: 'POST', body: payload }),
+  sendMessage: (payload) => request(`/messages`, { method: 'POST', body: payload }),
 
   login: (email, password) =>
-    request('/auth/login', { method: 'POST', body: { email, password } }),
+    request(`/auth/login`, { method: 'POST', body: { email, password } }),
 
   // Admin - mensajes
-  getMessages: () => request('/messages', {auth:true}),
+  getMessages: () => request(`/messages`, {auth:true}),
   markMessageRead: (id) => request(`/messages/${id}/read`, { method: 'PATCH', auth: true }),
-  deleteMessage: (id) => request('/messages/${id}', {method: 'DELETE', auth: true}),
+  deleteMessage: (id) => request(`/messages/${id}`, {method: 'DELETE', auth: true}),
   // Admin - productos
-  getAllProductsAdmin: () => request('/products/admin/all', { auth: true }),
+  getAllProductsAdmin: () => request(`/products/admin/all`, { auth: true }),
   createProduct: (payload) =>
-    request('/products', { method: 'POST', body: payload, auth: true }),
+    request(`/products`, { method: 'POST', body: payload, auth: true }),
   updateProduct: (id, payload) =>
     request(`/products/${id}`, { method: 'PUT', body: payload, auth: true }),
   deleteProduct: (id) => request(`/products/${id}`, { method: 'DELETE', auth: true }),
 
   // Admin - categorias
   createCategory: (name) =>
-    request('/categories', { method: 'POST', body: { name }, auth: true }),
+    request(`/categories`, { method: 'POST', body: { name }, auth: true }),
   deleteCategory: (id) => request(`/categories/${id}`, { method: 'DELETE', auth: true }),
 
   //Admin - pedidos
   getOrders: () => request('/orders', {auth: true}),
   createManualOrder: (payload) =>
-    request('/orders/manual', {method: 'POST', body:payload, auth: true}),
+    request(`/orders/manual`, {method: 'POST', body:payload, auth: true}),
   updateOrderStatus: (id, status) => 
-    request('/orders/${id}/status', {method: 'PATCH', body: {status}, auth: true}),
+    request(`/orders/${id}/status`, {method: 'PATCH', body: {status}, auth: true}),
   deleteOrder: (id) => request('/orders/${id}', {method:'DELETE',auth: true}),
 };
