@@ -1,0 +1,64 @@
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
+
+function getToken() {
+  return localStorage.getItem('admin_token');
+}
+
+async function request(path, { method = 'GET', body, auth = false } = {}) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (auth) {
+    const token = getToken();
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(`${API_URL}${path}`, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+
+  if (res.status === 204) return null;
+
+  const data = await res.json().catch(() => null);
+
+  if (!res.ok) {
+    throw new Error(data?.error || 'Error en la solicitud');
+  }
+
+  return data;
+}
+
+export const api = {
+  getCategories: () => request('/categories'),
+  getProducts: (categoryId) =>
+    request(`/products${categoryId ? `?category=${categoryId}` : ''}`),
+  sendMessage: (payload) => request('/messages', { method: 'POST', body: payload }),
+
+  login: (email, password) =>
+    request('/auth/login', { method: 'POST', body: { email, password } }),
+
+  // Admin - mensajes
+  getMessages: () => request('/messages', {auth:true}),
+  markMessageRead: (id) => request(`/messages/${id}/read`, { method: 'PATCH', auth: true }),
+  deleteMessage: (id) => request('/messages/${id}', {method: 'DELETE', auth: true}),
+  // Admin - productos
+  getAllProductsAdmin: () => request('/products/admin/all', { auth: true }),
+  createProduct: (payload) =>
+    request('/products', { method: 'POST', body: payload, auth: true }),
+  updateProduct: (id, payload) =>
+    request(`/products/${id}`, { method: 'PUT', body: payload, auth: true }),
+  deleteProduct: (id) => request(`/products/${id}`, { method: 'DELETE', auth: true }),
+
+  // Admin - categorias
+  createCategory: (name) =>
+    request('/categories', { method: 'POST', body: { name }, auth: true }),
+  deleteCategory: (id) => request(`/categories/${id}`, { method: 'DELETE', auth: true }),
+
+  //Admin - pedidos
+  getOrders: () => request('/orders', {auth: true}),
+  createManualOrder: (payload) =>
+    request('/orders/manual', {method: 'POST', body:payload, auth: true}),
+  updateOrderStatus: (id, status) => 
+    request('/orders/${id}/status', {method: 'PATCH', body: {status}, auth: true}),
+  deleteOrder: (id) => request('/orders/${id}', {method:'DELETE',auth: true}),
+};

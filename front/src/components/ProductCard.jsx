@@ -1,0 +1,21 @@
+export default function ProductCard({ product }) {
+  return (
+    <article className="vitrine">
+      <div className="vitrine__frame">
+        <span className="corner corner--tl" />
+        <span className="corner corner--tr" />
+        <span className="corner corner--bl" />
+        <span className="corner corner--br" />
+        {product.image_url ? (
+          <img src={product.image_url} alt={product.name} loading="lazy" />
+        ) : (
+          <div className="vitrine__placeholder">Sin imagen</div>
+        )}
+      </div>
+      <div className="vitrine__caption">
+        <h3>{product.name}</h3>
+        <p>{product.description}</p>
+      </div>
+    </article>
+  );
+}
