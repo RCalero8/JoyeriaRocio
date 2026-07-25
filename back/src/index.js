@@ -3,11 +3,13 @@
  */
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
 const categoriesRoutes = require('./routes/categories');
 const productsRoutes = require('./routes/products');
+const uploadRoutes = require('./routes/uploads');
 const messagesRoutes = require('./routes/messages');
 const ordersRoutes = require('./routes/orders');
 
@@ -31,6 +33,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, '../public/uploads')));
 
 app.get('/', (req, res) => {
   res.json({ status: 'ok', service: 'joyeria-backend' });
@@ -41,6 +44,7 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/products', productsRoutes);
+app.use('/api/upload', uploadRoutes);
 app.use('/api/messages', messagesRoutes);
 app.use('/api/orders', ordersRoutes);
 

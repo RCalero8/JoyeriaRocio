@@ -6,12 +6,17 @@ const supabase = require('../config/supabase');
    const { requireAdmin } = require('../middleware/auth');
 const router = express.Router();
 
-// Publico: listar productos activos, con filtro opcional por categoria y busqueda
-// GET /api/products?category=uuid&search=texto
+// Publico: listar productos activos, con filtro opcional por categoria, busqueda y paginación
+// GET /api/products?category=uuid&search=texto&page=1&limit=12
 router.get('/', async (req, res) => {
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 12;
+  const from = (page - 1) * limit;
+  const to = from + limit - 1;
+
   let query = supabase
     .from('products')
-    .select('*, category:categories(id, name)')
+    .select('*, category:categories(id, name)', { count: 'exact' })
     .eq('active', true)
     .order('created_at', { ascending: false });
 
@@ -23,9 +28,9 @@ router.get('/', async (req, res) => {
     query = query.ilike('name', `%${req.query.search}%`);
   }
 
-  const { data, error } = await query;
+  const { data, count, error } = await query.range(from, to);
   if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
+  res.json({ data: data || [], total: count ?? 0, page, limit });
 });
 
 // Admin: listar todos los productos (incluidos ocultos)

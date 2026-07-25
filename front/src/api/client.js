@@ -30,12 +30,32 @@ async function request(path, { method = 'GET', body, auth = false } = {}) {
 
 export const api = {
   getCategories: () => request('/categories'),
-  getProducts: ({ category, search } = {}) => {
+  getProducts: ({ category, search, page, limit } = {}) => {
     const params = new URLSearchParams();
     if (category) params.set('category', category);
     if (search) params.set('search', search);
+    if (page) params.set('page', page);
+    if (limit) params.set('limit', limit);
     const qs = params.toString();
     return request(`/products${qs ? `?${qs}` : ''}`);
+  },
+  uploadImage: async (file) => {
+    const token = getToken();
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const res = await fetch(`${API_URL}/upload`, {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: formData,
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      throw new Error(data?.error || 'Error al subir la imagen');
+    }
+
+    return res.json();
   },
   sendMessage: (payload) => request(`/messages`, { method: 'POST', body: payload }),
 

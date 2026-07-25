@@ -16,6 +16,7 @@ export default function AdminProducts() {
   const [newCategory, setNewCategory] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const load = () => {
     setLoading(true);
@@ -43,6 +44,23 @@ export default function AdminProducts() {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    setError(null);
+
+    try {
+      const { imageUrl } = await api.uploadImage(file);
+      setForm({ ...form, image_url: imageUrl });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -245,9 +263,27 @@ export default function AdminProducts() {
               </div>
 
               <div className="form__row form__row--full">
+                <label htmlFor="image_file">Imagen desde galería</label>
+                <input
+                  id="image_file"
+                  name="image_file"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+                {uploadingImage && <small>Cargando imagen…</small>}
+              </div>
+
+              <div className="form__row form__row--full">
                 <label htmlFor="image_url">URL de imagen</label>
                 <input id="image_url" name="image_url" value={form.image_url} onChange={handleChange} />
               </div>
+
+              {form.image_url && (
+                <div className="form__row form__row--full">
+                  <img src={form.image_url} alt="Vista previa" className="admin-image-preview" />
+                </div>
+              )}
 
               <div className="form__row form__row--full">
                 <label htmlFor="description">Descripción</label>
